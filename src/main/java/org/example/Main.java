@@ -7,5 +7,10 @@ public class Main {
                 "H1R 2G6", "Canada");
 
         System.out.println(address);
+
+        Department department = new Department("Andrew Andrew");
+        Department department1 = new Department("Andrew Godward");
+        System.out.println(department);
+        System.out.println(department1);
     }
 }
