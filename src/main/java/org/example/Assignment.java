@@ -48,7 +48,7 @@ public class Assignment {
             case 5, 6, 7, 8 -> random.nextInt(80, 90);
             default -> random.nextInt(90, 101);
         };
-        System.out.println(score);
+        scores.add(score);
     }
 
     @Override

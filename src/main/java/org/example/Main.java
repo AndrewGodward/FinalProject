@@ -13,6 +13,9 @@ public class Main {
         System.out.println(department);
         System.out.println(department1);
 
+        Course course = new Course();
+        System.out.println(course);
+
 
     }
 }

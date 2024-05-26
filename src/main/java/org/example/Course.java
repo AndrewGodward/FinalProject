@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 @Getter
 @Setter
 
@@ -54,16 +56,67 @@ public class Course {
         return true;
     }
 
-    public void generateScore() { // generates random scores for each assignment and student, and
-        // calculates the final score for each student.
-        for (Student student : registeredStudents) {
-            for (Assignment assignment : assignments) {
-                int score = (int) assignment.generateRandomScore();
-            }
+    public void generateScore() {
+        for (Assignment assignment : assignments) {
+            assignment.generateRandomScore();
         }
-
+        int[] averages = calcStudentsAverage();
+        for (int i = 0; i < averages.length; i++) {
+            finalScores.set(i, (double) averages[i]);
+        }
     }
 
+    public void displayScores() {
+        System.out.println("Course: " + courseName + " (C-" + department.getDepartmentId() + "-" + courseId + ")");
+        System.out.println("                ");
+        for (Assignment assignment : assignments) {
+            System.out.printf("%s\t", assignment.getAssignmentName());
+        }
+        System.out.printf("%s\t\t\n", "Final Score");
+        for (int i = 0; i < registeredStudents.size(); i++) {
+            Student student = registeredStudents.get(i);
+            System.out.printf("%s\t\t", student.getStudentName());
+            generateScore();
+            for (Assignment assignment : assignments) {
+                Integer score = assignment.getScores().get(i);
+                System.out.printf("%d\t\t", score);
+            }
+            System.out.printf("%.2f\t\t\n", finalScores.get(i));
+        }
+        System.out.printf("%s\t\t", "Average");
+        for (Assignment assignment : assignments) {
+            assignment.calcAssignment();
+            System.out.printf("%.2f\t\t", assignment.getAssignmentAverage());
+        }
+        System.out.println();
+    }
+
+    public String toSimplifiedString() {
+        return String.format("Course: " +
+                "Course ID: C-%s-%s\n"+
+                "Course name: %s\n" +
+                "Credits: %f\n" +
+                "Department: %s", courseName, department.getDepartmentId(), courseId, credits,
+                department);
+    }
+
+    @Override
+    public String toString() {
+        String students = "";
+        for (Student student : registeredStudents) {
+            students = student.toSimplifiedString() + "\n";
+        }
+        return String.format("Course: " +
+                        "Course name: %s\n" +
+                        "Course ID: C-%s-%s\n" +
+                        "Department: %s\n" +
+                        "Assignment %s\n" +
+                        "Registered students: %s",
+                courseName, department.getDepartmentId(), courseId, department.getDepartmentName(),
+                assignments, students);
+
+
+    }
 
     public String getCourseId() {
         return courseId;
@@ -128,4 +181,6 @@ public class Course {
     public static void setNextId(int nextId) {
         Course.nextId = nextId;
     }
+
+
 }
