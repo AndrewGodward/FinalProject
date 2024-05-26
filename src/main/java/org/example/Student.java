@@ -33,19 +33,18 @@ public class Student {
 
     }
 
-    public Student(String studentId, String studentName, Gender gender, Address address, Department department) {
-        this.studentId = studentId;
+    public Student(String studentName, Gender gender, Address address, Department department) {
         this.studentName = studentName;
         this.gender = gender;
         this.address = address;
         this.department = department;
-        this.studentId = "S" + String.format("%05d", nextId);
+        this.studentId = "S" + String.format("%05d", nextId++);
         this.registeredCourses = new ArrayList<>();
     }
 
 
     public String toSimplifiedString() {
-        return "Student{" +
+        return  "Student{" +
                 "studentId='" + studentId + '\'' +
                 ", studentName='" + studentName + '\'' +
                 ", departmentName= '" + department.getDepartmentName() + '\'' +
@@ -54,14 +53,17 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "studentId='" + studentId + '\'' +
-                ", studentName='" + studentName + '\'' +
-                ", gender=" + gender +
-                ", address=" + address +
-                ", department=" + department +
-                ", registeredCourses=" + registeredCourses +
-                '}';
+        String courses = "";
+        for (Course course : registeredCourses) {
+            courses = course.toSimplifiedString() + "\n";
+        }
+        return String.format("Student:\n" +
+                "Student ID: S%05d\n" +
+                "Student Name: %s\n" +
+                "Gender: %s" +
+                "Address: %s" +
+                "Department: %s" +
+                "Registered Courses: %s", nextId++, studentName, gender, address, department, courses);
     }
 
     public String getStudentId() {

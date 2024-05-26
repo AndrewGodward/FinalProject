@@ -29,7 +29,9 @@ public class Course {
 
     public boolean registerStudent(Student student) {
         registeredStudents.add(student);
-        assignments.add(null);
+        for (Assignment assignment : assignments) {
+            assignment.getScores().add(null);
+        }
         finalScores.add(null);
         return true;
     }
@@ -40,8 +42,8 @@ public class Course {
         for (int i = 0; i < registeredStudents.size(); i++) {
             double weightedSum = 0;
             for (Assignment assignment : assignments) {
-                int score = assignment.getScores().get(i);
-                if (score >= 0) {
+                Integer score = assignment.getScores().get(i);
+                if (score != null) {
                     weightedSum += score * assignment.getWeight();
                 }
             }
@@ -58,11 +60,14 @@ public class Course {
 
     public void generateScore() {
         for (Assignment assignment : assignments) {
-            assignment.generateRandomScore();
+            assignment.getScores().clear();
+            for (int i = 0; i < registeredStudents.size(); i++) {
+                assignment.generateRandomScore();
+            }
         }
-        int[] averages = calcStudentsAverage();
-        for (int i = 0; i < averages.length; i++) {
-            finalScores.set(i, (double) averages[i]);
+        int[] finalAverages = calcStudentsAverage();
+        for (int i = 0; i < finalAverages.length; i++) {
+            finalScores.set(i, (double) finalAverages[i]);
         }
     }
 
@@ -70,23 +75,22 @@ public class Course {
         System.out.println("Course: " + courseName + " (C-" + department.getDepartmentId() + "-" + courseId + ")");
         System.out.println("                ");
         for (Assignment assignment : assignments) {
-            System.out.printf("%s\t", assignment.getAssignmentName());
+            System.out.printf("  %s\t", assignment.getAssignmentName());
         }
         System.out.printf("%s\t\t\n", "Final Score");
         for (int i = 0; i < registeredStudents.size(); i++) {
             Student student = registeredStudents.get(i);
             System.out.printf("%s\t\t", student.getStudentName());
-            generateScore();
             for (Assignment assignment : assignments) {
                 Integer score = assignment.getScores().get(i);
                 System.out.printf("%d\t\t", score);
             }
-            System.out.printf("%.2f\t\t\n", finalScores.get(i));
+            System.out.printf(" \t\t%.0f\n", finalScores.get(i));
         }
         System.out.printf("%s\t\t", "Average");
         for (Assignment assignment : assignments) {
             assignment.calcAssignment();
-            System.out.printf("%.2f\t\t", assignment.getAssignmentAverage());
+            System.out.printf("%.0f\t\t", assignment.getAssignmentAverage());
         }
         System.out.println();
     }
@@ -116,6 +120,18 @@ public class Course {
                 assignments, students);
 
 
+    }
+
+    public Course(String courseId, String courseName, double credits, Department department,
+                  ArrayList<Assignment> assignments, ArrayList<Student> registeredStudents,
+                  ArrayList<Double> finalScores) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.credits = credits;
+        this.department = department;
+        this.assignments = assignments;
+        this.registeredStudents = registeredStudents;
+        this.finalScores = finalScores;
     }
 
     public String getCourseId() {
