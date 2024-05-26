@@ -14,6 +14,12 @@ public class Student {
     private ArrayList<Course> registeredCourses;
     private static int nextId = 1;
 
+    /**
+     * it  adds the course to the student's registeredCourses list, the student to the course's registeredStudents list,
+     * and it  appends a null for the scores of each assignment of the course
+     * @param course inputs the class course
+     * @return false if the course is already registered
+     */
     public boolean registerCourse(Course course) {
         if (registeredCourses.contains(course)) {
             return false;
@@ -23,6 +29,11 @@ public class Student {
         return true;
     }
 
+    /**
+     * removes the course from the students registered course list and from the course registeredStudents list
+     * @param course inputs the course class
+     * @return false if the course is not registered yet and true if it is
+     */
     public boolean dropCourse(Course course) {
         if (!registeredCourses.contains(course)) {
             return false;
@@ -33,6 +44,14 @@ public class Student {
 
     }
 
+    /**
+     * creates a student with studentId automatically generated based on the nextId and puts registeredCourses as an
+     * empty object
+     * @param studentName inputs String studentName
+     * @param gender inputs Gender class
+     * @param address inputs Address class
+     * @param department inputs Department class
+     */
     public Student(String studentName, Gender gender, Address address, Department department) {
         this.studentName = studentName;
         this.gender = gender;

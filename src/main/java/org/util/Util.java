@@ -2,6 +2,11 @@ package org.util;
 
 public class Util {
 
+    /**
+     * converts every word to a title case
+     * @param strIn inputs a String strIn
+     * @return returns it toTitleCase
+     */
     public static String toTitleCase(String strIn) {
         if (strIn == null || strIn.isEmpty()) {
             return strIn;

@@ -34,6 +34,11 @@ public class Department {
         return true;
     }
 
+    /**
+     * if the departmentName is invalid it will create the object with everything set as null
+     * @param departmentName inputs String departmentName
+     * @param departmentId inputs String departmentId
+     */
     public Department(String departmentName, String departmentId) {
         if (validateDepartmentName(departmentName)) {
             this.departmentName = departmentName;

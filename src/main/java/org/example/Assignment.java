@@ -20,7 +20,7 @@ public class Assignment {
     /**
      * it calculates the average score for one assignment
      */
-    public void calcAssignment() {
+    public void calcAssignmentAvg() {
         if (scores.isEmpty()) {
             this.assignmentAverage = 0;
             return;

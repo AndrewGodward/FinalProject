@@ -19,6 +19,10 @@ public class Course {
     private ArrayList<Double> finalScores;
     private static int nextId;
 
+    /**
+     * checks if the sum of the weights of the assignments of the course equal to 1(100%)
+     * @return true if 1, false if it is not equal to 1
+     */
     public boolean isAssignmentWeightValid() {
         double totalWeight = 0;
         for (Assignment assignment : assignments) {
@@ -27,6 +31,12 @@ public class Course {
         return totalWeight == 1.0;
     }
 
+    /**
+     * adds a student to the student list of the course, which also adds a new null element to each of the assignments
+     * of this course and adds a new null element for the finalScores
+     * @param student inputs the Student class
+     * @return true when the student is registered
+     */
     public boolean registerStudent(Student student) {
         registeredStudents.add(student);
         for (Assignment assignment : assignments) {
@@ -36,6 +46,10 @@ public class Course {
         return true;
     }
 
+    /**
+     * calculates the weighted average of a student
+     * @return weighted average
+     */
     public int[] calcStudentsAverage() {
         int[] averages = new int[registeredStudents.size()];
 
@@ -52,12 +66,22 @@ public class Course {
         return averages;
     }
 
+    /**
+     * adds an assignment to the course
+     * @param assignmentName inputs the String assignmentName
+     * @param weight inputs the double weight
+     * @param maxScore inputs the int maxScore
+     * @return true when the assignment has been added
+     */
     public boolean addAssignment(String assignmentName, double weight, int maxScore) {
         Assignment assignment = new Assignment(assignmentName, weight, maxScore);
         assignments.add(assignment);
         return true;
     }
 
+    /**
+     * generates a random score for each assignment and student then it calculates the score for each student
+     */
     public void generateScore() {
         for (Assignment assignment : assignments) {
             assignment.getScores().clear();
@@ -71,6 +95,9 @@ public class Course {
         }
     }
 
+    /**
+     * displays the scores of the course in a table with the assignment averages and the students weighted averages
+     */
     public void displayScores() {
         System.out.println("Course: " + courseName + " (C-" + department.getDepartmentId() + "-" + courseId + ")");
         System.out.println("                ");
@@ -89,12 +116,16 @@ public class Course {
         }
         System.out.printf("%s\t\t", "Average");
         for (Assignment assignment : assignments) {
-            assignment.calcAssignment();
+            assignment.calcAssignmentAvg();
             System.out.printf("%.0f\t\t", assignment.getAssignmentAverage());
         }
         System.out.println();
     }
 
+    /**
+     * coverts a course to a simple string of course id, course name, credits and department only
+     * @return converted strings of course
+     */
     public String toSimplifiedString() {
         return String.format("Course: " +
                 "Course ID: C-%s-%s\n"+
@@ -104,6 +135,11 @@ public class Course {
                 department);
     }
 
+    /**
+     * converts the course to a string that has courseId, courseName, credits, departmentName,
+     * assignments, and registeredStudents
+     * @return the converted String
+     */
     @Override
     public String toString() {
         String students = "";
