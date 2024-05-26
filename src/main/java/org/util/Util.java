@@ -1,4 +1,4 @@
-package org.example;
+package org.util;
 
 public class Util {
 }

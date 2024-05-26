@@ -43,4 +43,28 @@ public class Department {
             this.departmentId = null;
         }
     }
+
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public static int getNextId() {
+        return nextId;
+    }
+
+    public static void setNextId(int nextId) {
+        Department.nextId = nextId;
+    }
 }
